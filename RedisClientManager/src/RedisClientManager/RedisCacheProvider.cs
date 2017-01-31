@@ -23,7 +23,7 @@ namespace RedisClientManager
     public class RedisCacheProvider : ICacheProvider
     {
         //RedisEndpoint _endPoint;
-        ConnectionMultiplexer redis;
+        //ConnectionMultiplexer redis;
 
         public RedisCacheProvider()
         {
