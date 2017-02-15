@@ -1,0 +1,66 @@
+    /// <summary>
+    /// http://www.alteridem.net/2016/06/18/nunit-3-testing-net-core-rc2/
+    /// https://github.com/nunit/dotnet-test-nunit
+    /// </summary>
+    [TestFixture]
+    public class Class1
+    {
+        [TestCase(1, 1, 2)]
+        [TestCase(-1, -1, -2)]
+        [TestCase(100, 5, 105)]
+        public void CanAddNumbers(int x, int y, int expected)
+        {
+            Assert.That(Calculator.Add(x, y), Is.EqualTo(expected));
+        }
+
+        [TestCase(1, 1, 0)]
+        [TestCase(-1, -1, 0)]
+        [TestCase(100, 5, 95)]
+        public void CanSubtract(int x, int y, int expected)
+        {
+            Assert.That(Calculator.Subtract(x, y), Is.EqualTo(expected));
+        }
+
+        [TestCase(1, 1, 1)]
+        [TestCase(-1, -1, 1)]
+        [TestCase(100, 5, 500)]
+        public void CanMultiply(int x, int y, int expected)
+        {
+            Assert.That(Calculator.Multiply(x, y), Is.EqualTo(expected));
+        }
+
+        [TestCase(1, 1, 1)]
+        [TestCase(-1, -1, 1)]
+        [TestCase(100, 5, 20)]
+        public void CanDivide(int x, int y, int expected)
+        {
+            Assert.That(Calculator.Divide(x, y), Is.EqualTo(expected));
+        }
+    }
+    
+    
+    {
+  "version": "1.0.0-*",
+  "testRunner": "nunit",
+  "dependencies": {
+    "dotnet-test-nunit": "3.4.0-beta-2",
+    "NETStandard.Library": "1.6.0",
+    "NUnit": "3.6.0"
+    //"dotnet-test-nunit": "3.4.0-beta-3"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+        }
+      },
+      "imports": [
+        "dotnet5.6",
+        "portable-net45+win8"
+      ]
+    }
+  }
+}
