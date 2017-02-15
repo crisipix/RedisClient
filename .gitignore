@@ -5,3 +5,9 @@ RedisClientManager/.vs/
 RedisClientManager/src/RedisClientManager/obj/
 RedisClientManager/src/RedisClientManager/bin/
 RedisClientManager/src/RedisClientManager/project.lock.json
+RedisClientManager/src/RedisClientManager.MSTest.Specs/obj/
+RedisClientManager/src/RedisClientManager.Specs/bin/
+RedisClientManager/src/RedisClientManager.Specs/obj/
+RedisClientManager/src/RedisClientManager.Specs/project.lock.json
+RedisClientManager/src/RedisClientManager.MSTest.Specs/project.lock.json
+RedisClientManager/src/RedisClientManager.MSTest.Specs/bin/
