@@ -82,10 +82,15 @@
     {
         protected IWebHostBuilder TestWebHostBuilder { get; set; }
         protected TestServer BaseHost { get; set; }
+[TestClass]
+    public class TestBase
+    {
+        protected IWebHostBuilder TestWebHostBuilder { get; set; }
+        protected TestServer BaseHost { get; set; }
         protected HttpClient CoverageUniverseClient { get; set; }
         [ClassInitialize]
         public void ClassInitialize() {  }
-
+        protected BamResearchContext Context { get; set; }
 
         [TestInitialize]
         public virtual void BeforeEachTest()
@@ -108,8 +113,9 @@
 
 
             var isp = Startup.ServiceProvider;
-            var database= isp.GetService<BamResearchContext>();
-            var appEnv = PlatformServices.Default.Application;
+            Context = (BamResearchContext) isp.GetService(typeof(BamResearchContext));
+            Context.Database.BeginTransaction();
+            //var appEnv = PlatformServices.Default.Application;
             
             //var transaction = BamResearchContext.Database.BeginTransaction();
         }
@@ -122,8 +128,10 @@
 
         [TestCleanup]
         public void TestCleanup() {
+            Context.Database.RollbackTransaction();
             BaseHost.Dispose();
             CoverageUniverseClient.Dispose();
+
 
             //if (_scope != null)
             //{
