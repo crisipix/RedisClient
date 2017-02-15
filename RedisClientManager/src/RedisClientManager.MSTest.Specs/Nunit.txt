@@ -64,3 +64,76 @@
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+ [TestClass]
+    public class TestBase
+    {
+        protected IWebHostBuilder TestWebHostBuilder { get; set; }
+        protected TestServer BaseHost { get; set; }
+        protected HttpClient CoverageUniverseClient { get; set; }
+        [ClassInitialize]
+        public void ClassInitialize() {  }
+
+
+        [TestInitialize]
+        public virtual void BeforeEachTest()
+        {
+            
+            
+            //var _scope = new TransactionScope(TransactionScopeOption.Required,
+            //                           new TransactionOptions
+            //                           {
+            //                               IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted,
+            //                               Timeout = TransactionManager.MaximumTimeout
+            //                           });
+
+            TestWebHostBuilder = new WebHostBuilder()
+                                  .UseEnvironment("Development")
+                                  .UseStartup<Startup>();
+            BaseHost = new TestServer(TestWebHostBuilder);
+            CoverageUniverseClient = BaseHost.CreateClient();
+
+
+
+            var isp = Startup.ServiceProvider;
+            var database= isp.GetService<BamResearchContext>();
+            var appEnv = PlatformServices.Default.Application;
+            
+            //var transaction = BamResearchContext.Database.BeginTransaction();
+        }
+
+        public static StringContent CreateRequestData(object requestData)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
+            return content;
+        }
+
+        [TestCleanup]
+        public void TestCleanup() {
+            BaseHost.Dispose();
+            CoverageUniverseClient.Dispose();
+
+            //if (_scope != null)
+            //{
+            //    _scope.Dispose();
+            //}
+        }
+
+        [ClassCleanup]
+        public void ClassCleanup() {
+            
+        }
+
+    }
