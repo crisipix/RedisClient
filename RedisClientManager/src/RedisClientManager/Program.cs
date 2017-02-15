@@ -18,17 +18,22 @@ namespace RedisClientManager
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
+            Process();            
+
+            Console.WriteLine( "Done");
+            Console.ReadLine();
+        }
+
+        public static string Process()
+        {
             Console.WriteLine("Redis Desktop Manager : http://docs.redisdesktop.com/en/latest/quick-start/");
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost:6379");
             IDatabase db = redis.GetDatabase();
 
             GetValuesAsync(db);
-            GetValues(db);
+            var results = GetValues(db);
 
-
-            Console.WriteLine( "Done");
-            Console.ReadLine();
-           
+            return results;
         }
 
         public static async void GetValuesAsync(IDatabase db)
@@ -41,12 +46,14 @@ namespace RedisClientManager
             Console.WriteLine($"Result : {result.Result}");
         }
 
-        public static void GetValues(IDatabase db)
+        public static string GetValues(IDatabase db)
         {
             string value = "Core1.0_abcdefg";
             db.StringSet("coreKey", value);
             string getValue = db.StringGet("coreKey");
-            Console.WriteLine($"Your Value is {getValue}"); // writes: "abcdefg"
+            var message = $"Your Value is {getValue}";
+            Console.WriteLine(message); // writes: "abcdefg"
+            return message;
         }
 
         public static async Task<int> LongRunning()
